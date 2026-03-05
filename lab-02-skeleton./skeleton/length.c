@@ -34,17 +34,29 @@ void deleteHugeList(List list) {
 
 long lengthIterative(List list) {
     // TODO : Cerința 3
-    return 0l;
+    long len = 0;
+    List aux = list;
+    
+    while (aux != NULL) {
+        len++;
+        aux = aux->next;
+    }
+    
+    return len;
 }
 
 long lengthStackRecursive(List list) {
     // TODO : Cerința 3
-    return 0l;
+    if(list == NULL)
+        return 0l;
+    return 1 + lengthStackRecursive(list->next);
 }
 
 long lengthTailRecursive(List list) {
     // TODO : Cerința 3
-    return 0l;
+    if(list == NULL)
+        return 0l;
+    return lengthTailRecursive()
 }
 
 void evalLengthFunction(long SIZE, char name[], long(*length)(List)) {
