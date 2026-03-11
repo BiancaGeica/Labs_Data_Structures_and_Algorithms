@@ -14,10 +14,20 @@ TSortedList getNaturals(int A, int B) {
 
 TSortedList getPrimes(int N) {
     TSortedList nats = getNaturals(2, N);
+    TSortedList primes = NULL;
 
-    // TODO: Cerința Bonus
+    while (!isEmpty(nats)) {
+        int p = nats->value; 
+        primes = insert(primes, p);
 
-    return nats;
+        int multiple = p;
+        while (multiple <= N) {
+            nats = deleteOnce(nats, multiple);
+            multiple += p;
+        }
+    }
+
+    return primes;
 }
 
 void printInts(TSortedList list) {
