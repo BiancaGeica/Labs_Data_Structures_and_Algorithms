@@ -35,9 +35,9 @@ int isEmpty(TSortedList list) {
 }
 
 int contains(TSortedList list, T element) {
-    TNode* temp = list;
-    while (temp != NULL) {
-        if (temp->value == element) {
+    TNode* temp = list; //luam o variabila temporara pentru a nu pierde head-ul listei
+    while (temp != NULL) { //Null este finalul listei
+        if (temp->value == element) { 
             return 1;
         }
         temp = temp->next;
@@ -48,35 +48,39 @@ int contains(TSortedList list, T element) {
 
 TSortedList insert(TSortedList list, T element) {
     TNode* node = create(element);
-    
-    if (isEmpty(list)){
+
+    if (isEmpty(list)){ //if the list is empty
+        node->next = NULL;
+        return node;
+    }
+
+    if (list->value > element) { //insert at the start
         node->next = list;
         return node;
     }
-    else if(element < list->value) {
-        node->next = list;
-        return node;
-    }
-    else {
-        TNode *temp = list;
-        //while(temp->next->value < element && temp->next != NULL) { //SEGMENTATION FAULT
-        while(temp->next != NULL && temp->next->value < element) {
-            temp = temp->next;
+
+    TSortedList iter = list;
+    while(iter->next != NULL) { //insert inside
+        if (iter->next->value > element) {
+            node->next = iter->next;
+            iter->next = node;
+            return list;
         }
-        node->next = temp->next;
-        temp->next = node;
+        iter = iter->next;
     }
+
+    iter->next = node; //insert at the end of the list
     return list;
 }
 
 TSortedList deleteOnce(TSortedList list, T element) {
     if (isEmpty(list))
-        return list;
+        return list; //if the list is empty, we have nothing to do
 
     if (list->value == element) {
-        TNode *wanted = list;
+        TNode *iter = list;
         list = list->next;
-        free(wanted);
+        free(iter);
         return list;
     }
     
@@ -95,19 +99,21 @@ TSortedList deleteOnce(TSortedList list, T element) {
 }
 
 long length(TSortedList list) {
-    //if(isEmpty(list)){
-    //    return 0;
-    //}
-    //long len = 0;
-    //while(list != NULL) {
-    //    len++;
-    //    list = list->next;
-    //}
-    //return len;
-
-    if(list == NULL)
+    if(isEmpty(list)){
         return 0;
-    return 1 + length(list->next);
+    }
+    long len = 0;
+    TNode *temp = list;
+    while(temp != NULL) {
+        len++;
+        temp = temp->next;
+    }
+    return len;
+
+    /*if(isEmpty(list))
+        return 0;
+    
+    return 1 + length(list->next);*/
 }
 
 T getNth(TSortedList list, int n) {

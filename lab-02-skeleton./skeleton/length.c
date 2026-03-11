@@ -52,12 +52,12 @@ long lengthStackRecursive(List list) {
     return 1 + lengthStackRecursive(list->next);
 }
 
-long lengthTailRecursive(List list) {
+/*long lengthTailRecursive(List list) {
     // TODO : Cerința 3
     if(list == NULL)
         return 0l;
-    return lengthTailRecursive()
-}
+    return lengthTailRecursive();
+}*/
 
 void evalLengthFunction(long SIZE, char name[], long(*length)(List)) {
     clock_t t0, t1;
@@ -74,7 +74,7 @@ int main(int argc, char* argv[]) {
     static const long SIZE = 200000l;                              // size of list
 
     evalLengthFunction(SIZE, "Iterative", &lengthIterative);
-    evalLengthFunction(SIZE, "Tail Recursive", &lengthTailRecursive);
+    //evalLengthFunction(SIZE, "Tail Recursive", &lengthTailRecursive);
     evalLengthFunction(SIZE, "Stack Recursive", &lengthStackRecursive);
 
     return 0;
